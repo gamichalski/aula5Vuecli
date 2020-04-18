@@ -1,27 +1,35 @@
 <template>
   <div id="app">
-    <list title="Buscas"/>
+    <input class="input" placeholder="Digite sua pesquisa" v-model="filter"/>
+    <list title="Buscas" :items="filteredItems"/>
   </div>
 </template>
 
 <script>
 import List from "./components/List";
+import items from "./items"
 
 export default {
   name: "App",
   components: {
     List
-  }
+  },
+  data() {
+    return {
+      items,
+      filter: ""
+    };
+  },
+  computed: {
+    filteredItems(){
+      return this.items.filter((item) => {
+        return item.toLowerCase().includes(this.filter.toLowerCase())
+      }).slice(0, 5);
+    }
+  } 
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "../node_modules/bulma/bulma.sass";
 </style>
